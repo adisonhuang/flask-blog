@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as macros %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/archives.css', _external=True) }}">
+{% endblock %}
+
+{% block main %}
+    {{ super() }}
+
+
+    <section class="posts-collapse">
+        <h3>目前共计{{ count }} 篇日志。 继续努力。</h3>
+
+        {% for y in year %}
+            <div class="collection-title">
+                <h2 style="opacity: 1; display: block; transform: translateX(0px);"> {{ y }}</h2>
+            </div>
+
+            {% for i in data[y] %}
+                <article class="post post-type-normal"
+                         style="opacity: 1; display: block; transform: translateY(0px);">
+
+                    <header class="post-header">
+                        <h1 class="post-title">
+                            <a class="post-title-link" href="{{ url_for('main.article', id=i.id) }}" itemprop="url">
+                                <span style="font-size: 12px">{{ i.month_and_day }}</span> <span
+                                    itemprop="name">{{ i.title }}</span>
+                            </a>
+
+                        </h1>
+                    </header>
+                </article>
+            {% endfor %}
+
+        {% endfor %}
+
+    </section>
+    {{ macros.pagination_widget(pagination, endpoint) }}
+
+
+{% endblock %}

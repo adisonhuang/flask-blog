@@ -1,0 +1,21 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+<form id="submit-comment-form" id="submit-comment-form" method="post" action="">
+    <fieldset>
+        {{ form.csrf_token }}
+        {{ form.follow_id(type='hidden') }}
+        {{ form.follow(type='hidden') }}
+        <div class="group">
+            <label for="cName">名字 <span class="required">*</span></label>
+            {{ form.name( id="cName",  size="35", required='', value=current_user.username) }}
+        </div>
+        <div class="group">
+            <label for="cEmail">邮箱 <span class="required">*</span></label>
+            {{ form.email( id="cEmail", size="35", required='', value=current_user.email) }}
+        </div>
+        <div class="message group">
+            <label for="cMessage">Message <span class="required">*</span></label>
+            {{ form.content(rows="10" ,cols="50", required='') }}
+        </div>
+        <button type="submit" class="submit">提交</button>
+    </fieldset>
+</form>

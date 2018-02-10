@@ -1,0 +1,80 @@
+<!-- commentlist -->
+<ol class="commentlist">
+
+    {% if comments %}
+        {% for comment in comments %}
+            {% if comment.comment_type == 'comment' or  comment.comment_type =='contact' %}
+                <li class="depth-1">
+
+                    <div class="avatar">
+                        <img width="50" height="50" class="avatar" src="{{ comment.gravatar() }}" alt="">
+                    </div>
+
+                    <div class="comment-content">
+
+                        <div class="comment-info">
+                            <cite>{{ comment.author_name }}</cite>
+
+                            <div class="comment-meta">
+                                <time class="comment-time" datetime="2014-07-12T23:05">{{ comment.created }}</time>
+                                <!--链接的 onclick 事件被先执行，其次是 href 属性下的动作（页面跳转，或 javascript 伪链接）；
+                                    假设链接中同时存在 href 与 onclick，如果想让 href 属性下的动作不执行，onclick 必须得到一个 false 的返回值。不信，你可以将 goGoogle 函数中的 return false 注释掉；
+                                    如果页面过长有滚动条，且希望通过链接的 onclick 事件执行操作。应将它的 href 属性设为 javascript:void(0);，而不要是 #，这可以防止不必要的页面跳动； -->
+                                <span class="sep">/</span><a class="reply"
+                                                             onclick="go_to_reply({{ comment.id }}, '{{ comment.author_name }}')"
+                                                             href="javascript:void(0)">回复</a>
+                            </div>
+                        </div>
+
+                        <div class="comment-text">
+                            <p>{{ comment.content }}</p>
+                        </div>
+
+                    </div>
+                    {% if comment.replys %}
+                        {% for reply in comment.replys %}
+                            <ul class="children">
+
+                                <li class="depth-2">
+
+                                    <div class="avatar">
+                                        <img width="50" height="50" class="avatar" src="{{ reply.gravatar() }}"
+                                             alt="">
+                                    </div>
+
+                                    <div class="comment-content">
+
+                                        <div class="comment-info">
+                                            <cite>{{ reply.author_name }}</cite>
+
+                                            <div class="comment-meta">
+                                                <time class="comment-time"
+                                                      datetime="2014-07-12T25:05">{{ reply.created }}
+                                                </time>
+                                                <span class="sep">/</span><a class="reply"
+                                                                             onclick="go_to_reply({{ comment.id }}, '{{ reply.author_name }}')"
+                                                                             href="javascript:void(0)">回复</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="comment-text">
+                                            <p>@{{ reply.reply_to }} {{ reply.content }}</p>
+                                        </div>
+
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+</ol> <!-- Commentlist End -->

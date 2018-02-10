@@ -1,0 +1,61 @@
+{% macro pagination_widget(pagination,endpoint,fragment='') %}
+    {#    <div class="pagenav">#}
+    {#        <p>#}
+    {#            <a {% if not pagination.has_prev %} class="disabled" {% endif %} rel="prev" href="{% if pagination.has_prev %}{{ url_for(endpoint,page =pagination.prev_num,**kwargs) }}{{ fragment }}{% else %}#{% endif %}">上一页</a>#}
+    {#            <a {% if not pagination.has_next %} class="disabled"{% endif %} rel="next" href="{% if pagination.has_next %}{{ url_for(endpoint, page=pagination.next_num, **kwargs) }}{{ fragment }}{% else %}#{% endif %}">下一页</a>#}
+    {#        </p>#}
+    {#    </div>#}
+    {#    <ul class="pagination">#}
+    {#        <li {% if not pagination.has_prev %} class="disabled" {% endif %}>#}
+    {#            <a href="#}
+    {##}
+    {#                    #}
+    {#                    {% if pagination.has_prev %}{{ url_for(endpoint,page =pagination.prev_num,**kwargs) }}{{ fragment }}{% else %}#{% endif %}">&laquo;</a>#}
+    {#        </li>#}
+    {#        {% for p in pagination.iter_pages() %}#}
+    {#            {% if p %}#}
+    {#                {% if p == pagination.page %}#}
+    {#                    <li class="active"><a href="{{ url_for(endpoint,page =p,**kwargs) }}{{ fragment }}">{{ p }}</a></li>#}
+    {#                {% else %}#}
+    {#                    <li>#}
+    {#                        <a href="{{ url_for(endpoint, page = p, **kwargs) }}{{ fragment }}">{{ p }}</a>#}
+    {#                    </li>#}
+    {#                {% endif %}#}
+    {#            {% else %}#}
+    {#                <li class="disabled"><a href="#">&hellip;</a></li>#}
+    {#            {% endif %}#}
+    {#        {% endfor %}#}
+    {#        <li{% if not pagination.has_next %} class="disabled"{% endif %}>#}
+    {#            <a href="#}
+    {##}
+    {#                    #}
+    {#                    {% if pagination.has_next %}{{ url_for(endpoint, page=pagination.next_num, **kwargs) }}{{ fragment }}{% else %}#{% endif %}">#}
+    {#                &raquo;#}
+    {#            </a>#}
+    {#        </li>#}
+    {#    </ul>#}
+
+    <nav class="pagination add-bottom">
+        <a {% if not pagination.has_prev %} class="page-numbers prev inactive" {% else %}class="page-numbers prev" {% endif %} href="{% if pagination.has_prev %}{{ url_for(endpoint,page =pagination.prev_num,**kwargs) }}{{ fragment }}{% else %}#{% endif %}">&laquo;</a>
+
+        {% for p in pagination.iter_pages() %}
+            {% if p %}
+                {% if p == pagination.page %}
+                    <a class="page-numbers current"
+                       href="{{ url_for(endpoint,page =p,**kwargs) }}{{ fragment }}">{{ p }}</a>
+                {% else %}
+                    <a class="page-numbers" href="{{ url_for(endpoint, page = p, **kwargs) }}{{ fragment }}">{{ p }}</a>
+                {% endif %}
+            {% else %}
+                <a class="page-numbers" href="#">&hellip;</a>
+            {% endif %}
+        {% endfor %}
+
+        <a {% if not pagination.has_next %} class="page-numbers next inactive "
+                                            {% else %}class="page-numbers next" {% endif %}href="
+                {% if pagination.has_next %}{{ url_for(endpoint, page=pagination.next_num, **kwargs) }}{{ fragment }}{% else %}#{% endif %}">
+            &raquo;
+        </a>
+
+    </nav>
+{% endmacro %}

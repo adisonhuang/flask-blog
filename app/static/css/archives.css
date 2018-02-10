@@ -1,0 +1,135 @@
+@media (max-width: 767px) {
+  .posts-collapse {
+    margin: 0 20px;
+  }
+  .posts-collapse .post-title,
+  .posts-collapse .post-meta {
+    display: block;
+    width: auto;
+    text-align: left;
+  }
+}
+.posts-collapse {
+  margin-left: 0;
+}
+@media (max-width: 767px) {
+  .posts-collapse {
+    margin: 0 20px;
+  }
+}
+.posts-collapse .collection-title {
+    position: relative;
+    margin: 60px 0;
+}
+
+/*.posts-collapse .collection-title h2 {*/
+    /*margin-left: 20px;*/
+/*}*/
+
+.posts-collapse .collection-title small {
+    color: #bbb;
+}
+
+/*.posts-collapse .collection-title::before {*/
+    /*content: " ";*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 50%;*/
+    /*margin-left: -4px;*/
+    /*margin-top: -4px;*/
+    /*width: 8px;*/
+    /*height: 8px;*/
+    /*background: #bbb;*/
+    /*border-radius: 50%;*/
+/*}*/
+
+.posts-collapse .post {
+    margin: 30px 0;
+}
+
+.posts-collapse .post-header {
+    position: relative;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    transition-property: border;
+    border-bottom: 1px dashed #ccc;
+}
+
+.posts-collapse .post-header::before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    background: #bbb;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    transition-property: background;
+}
+
+.posts-collapse .post-header:hover {
+    border-bottom-color: #666;
+}
+
+.posts-collapse .post-header:hover::before {
+    background: #222;
+}
+
+.posts-collapse .post-meta {
+    position: absolute;
+    font-size: 12px;
+    left: 20px;
+    top: 5px;
+}
+
+.posts-collapse .post-title {
+    margin-left: 10px;
+    font-size: 16px;
+    margin-left: 20px;
+    font-weight: normal;
+    font-family: Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: inherit;
+}
+
+.posts-collapse .post-title::after {
+    margin-left: 3px;
+    opacity: 0.6;
+}
+
+.posts-collapse .post-title a {
+    border-bottom: none;
+    color: #4A5153;
+}
+
+post-type-normal {
+    position: fixed;
+    right: 50px;
+    bottom: 45px;
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+    background: #222;
+    line-height: 0;
+    z-index: 1050;
+    cursor: pointer;
+    -webkit-transform: translateZ(0);
+}
+
+.post-header {
+    height: auto;
+    width: auto;
+}
+
+.post-title-link:hover {
+    text-decoration: none;
+}
+
+.posts-collapse .post-meta {
+  font-size: 12px;
+}

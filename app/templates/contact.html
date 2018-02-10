@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% import '_macros.html' as macros %}
+{% block main %}
+    {{ super() }}
+    <style>
+        /*	Blockquotes */
+        blockquote {
+            margin: 30px 0px;
+            padding-left: 40px;
+            position: relative;
+            border-left: 0px solid #dddddd;
+            text-align: center;
+        }
+
+        blockquote > p {
+            font-size: 25px;
+        }
+    </style>
+
+    <aside class="pull-quote">
+        <blockquote>
+            <p>Done is better than perfect...</p>
+        </blockquote>
+    </aside>
+
+    <div id="wechat_subscriber"
+         style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center"><br> <a
+            href="{{ url_for('static', filename='images/qrcode_for_wx.jpg') }}" class="fancybox" rel="group"><img
+            id="wechat_subscriber_qcode"
+            src="{{ url_for('static', filename='images/qrcode_for_wx.jpg') }}"
+            alt="nMask wechat"
+            style="width: 200px; max-width: 100%;"></a><br>
+        <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+        <br>
+    </div>
+
+ <!-- Comments
+            ================================================== -->
+        <div id="comments">
+            <!-- commentlist -->
+
+            {% include '_comments.html' %}
+            {% if counts %}
+                {{ macros.pagination_widget(pagination, endpoint, fragment='#comments') }}
+            {% endif %}
+
+
+            <!-- respond -->
+            <div class="respond" id="submit-comment">
+
+                <h3>留言</h3>
+
+                <!-- form -->
+                {% include "_submit_comment.html" %}
+
+            </div> <!-- Respond End -->
+
+        </div>  <!-- Comments End -->
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/comment-reply.js', _external=True) }}"></script>
+{% endblock %}

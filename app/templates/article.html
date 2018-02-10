@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as macros %}
+{% block main %}
+    {{ super() }}
+    <article class="entry">
+
+        <header class="entry-header">
+
+            <h2 class="entry-title">
+                {{ article.title }}
+            </h2>
+
+            <div class="entry-meta">
+                <ul>
+                    <li>{{ moment(article.created).fromNow() }}</li>
+                    <span class="meta-sep">&bull;</span>
+                    <li>{{ article.source }}</li>
+                </ul>
+            </div>
+
+        </header>
+
+        <div class="entry-content">
+            <p class="lead">
+                {% if article.content_html %}
+                    {{ article.content_html | safe }}
+                {% else %}
+                    {{ article.content }}
+                {% endif %}
+            </p>
+        </div>
+        {% if article.tags %}
+            <p class="tags">
+                <span>标签</span>：
+                {% for tag in article.tags %}
+                    <a href="{{ url_for('main.tag',name =tag.name ) }}" title="" rel="tag">{{ tag.name }}</a>&nbsp;
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <ul class="post-nav group">
+            {% if prev_article %}
+                <li class="prev"><a rel="prev"
+                                    href="{{ url_for('main.article',id =prev_article.id) }}"><strong>前一篇</strong>{{ prev_article.title }}
+                </a></li>
+            {% endif %}
+            {% if next_article %}
+                <li class="next"><a rel="next"
+                                    href="{{ url_for('main.article',id =next_article.id) }}"><strong>后一篇</strong> {{ next_article.title }}
+                </a></li>
+            {% endif %}
+
+        </ul>
+
+        <!-- Comments
+            ================================================== -->
+        <div id="comments">
+            {% if counts %}
+                <h3>{{ counts }} 评论</h3>
+            {% endif %}
+            <!-- commentlist -->
+
+            {% include '_comments.html' %}
+            {% if counts %}
+                {{ macros.pagination_widget(pagination, endpoint, id=id, fragment='#comments') }}
+            {% endif %}
+
+
+            <!-- respond -->
+            <div class="respond" id="submit-comment">
+
+                <h3>评论</h3>
+
+                <!-- form -->
+                {% include "_submit_comment.html" %}
+
+            </div> <!-- Respond End -->
+
+        </div>  <!-- Comments End -->
+
+    </article>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="{{ url_for('static', filename='js/comment-reply.js', _external=True) }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>gethits({{ article.id }}, 'articlehits');</script>
+{% endblock %}

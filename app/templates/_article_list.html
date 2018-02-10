@@ -1,0 +1,41 @@
+{#<ul class="articles">#}
+{% for article in articles %}
+    <article class="entry">
+
+        <header class="entry-header">
+
+            <h2 class="entry-title">
+                <a href="{{ article.link }}" title="">{{ article.title }}</a>
+            </h2>
+
+            <div class="entry-meta">
+                <ul>
+                    <li>{{ moment(article.created).fromNow() }}</li>
+                    <span class="meta-sep">&bull;</span>
+                    <li>{{ article.source }}</li>
+                    {% for tag in article.tags %}
+                        <span class="meta-sep">&bull;</span>
+                        <li><a href="{{ url_for('main.tag',name =tag.name ) }}" title="" rel="tag">{% if select_tag and select_tag.name == tag.name %} <mark>{{ tag.name }}</mark>{% else %}{{ tag.name }}{% endif %}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </header>
+
+        <div class="entry-content">
+            <p>
+                {{ article.summary | safe }}
+            {% if article.has_more %}<p><a href="{{ article.link }}" rel="nofollow">阅读更多...</a>{% endif %}
+            </p>
+        </div>
+
+        <div class="post-more-link text-center">
+            <a href="{{ article.link }}" title="">
+              阅读全文 »
+            </a>
+          </div>
+
+    </article> <!-- end entry -->
+{% endfor %}
+{#</ul>#}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block main %}
+    {{ super() }}
+    <h2>
+        关于博客
+    </h2>
+    <p>基于个人开源博客系统<a href="https://github.com/adisonhuang/flask-blog" rel="nofollow"  target="_blank">flask-blog</a></p>
+    <p>欢迎大家fork或给我issue</p>
+    <p>博客目的：技术输出、知识总结</p>
+
+    <h2>
+        关于我
+    </h2>
+    <p>普通程序猿，不提也罢</p>
+
+    <h2>
+        个人公众号
+    </h2>
+
+    <a href="{{ url_for('static', filename='images/qrcode_for_wx.jpg') }}" class="fancybox" rel="group"><img
+            id="wechat_subscriber_qcode"
+            src="{{ url_for('static', filename='images/qrcode_for_wx.jpg') }}"
+            alt="nMask wechat"
+            style="width: 200px; max-width: 100%;"></a>
+
+    <h2>
+        联系我
+    </h2>
+    <ul>
+        <li>
+            <a href="https://github.com/adisonhuang/" target="_blank">Github</a>
+        </li>
+         <li>
+            <a href="https://www.jianshu.com/u/42462a43083c/" target="_blank">简书</a>
+        </li>
+        <li>
+            <a href="https://weibo.com/5544414419/" target="_blank">微博</a>
+        </li>
+        <li>
+            <a href="https://www.zhihu.com/people/adison/" target="_blank">知乎</a>
+        </li>
+    </ul>
+
+
+
+
+{% endblock %}

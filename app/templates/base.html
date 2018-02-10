@@ -1,0 +1,254 @@
+{% block doc -%}
+    <!DOCTYPE html>
+    <html{% block html_attribs %}{% endblock html_attribs %}>
+    {%- block html %}
+        <head>
+            {%- block head %}
+                <title>{% block title %}Adison's Room{% endblock title %}</title>
+
+                {%- block metas %}
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta name="baidu-site-verification" content="Da19WSvP8d"/>
+                {%- endblock metas %}
+
+                {%- block styles %}
+                    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}"
+                          type="image/x-icon">
+                    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+                    <link rel="stylesheet"
+                          href="{{ url_for('static', filename='css/default.css', _external=True) }}">
+                    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css', _external=True) }}">
+                    <link rel="stylesheet"
+                          href="{{ url_for('static', filename='css/media-queries.css', _external=True) }}">
+                    <!--百度统计-->
+                    <script>
+                        var _hmt = _hmt || [];
+                        (function () {
+                            var hm = document.createElement("script");
+                            hm.src = "https://hm.baidu.com/hm.js?9669a981f0cf960985189c066a88f491";
+                            var s = document.getElementsByTagName("script")[0];
+                            s.parentNode.insertBefore(hm, s);
+                        })();
+                    </script>
+
+                    <!-- Global site tag (gtag.js) - Google Analytics -->
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112420326-1"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+
+                        function gtag() {
+                            dataLayer.push(arguments);
+                        }
+
+                        gtag('js', new Date());
+
+                        gtag('config', 'UA-112420326-1');
+                    </script>
+
+                {%- endblock styles %}
+            {%- endblock head %}
+        </head>
+        <body{% block body_attribs %}{% endblock body_attribs %}>
+        {% block body -%}
+            {% block navbar %}
+                <header id="top">
+                    <div class="row">
+
+                        <div class="header-content twelve columns">
+
+                            <h1 id="logo-text"><a href="{{ url_for('main.index') }}" title="">Adison's Room </a></h1>
+                            <p id="intro">Done is better than perfect...</p>
+
+                        </div>
+
+                    </div>
+
+                    <nav id="nav-wrap">
+
+                        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show Menu</a>
+                        <a class="mobile-btn" href="#" title="Hide navigation">Hide Menu</a>
+
+                        <div class="row">
+
+                            <ul id="nav" class="nav">
+
+                                <li>
+                                    <a href="{{ url_for('main.index') }}">首页</a></li>
+                                <li>
+                                    <a href="{{ url_for('main.archives') }}" title="归档">归档</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('main.contact') }}" title="留言">留言</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('main.about') }}" title="关于">关于</a>
+                                </li>
+                            </ul> <!-- end #nav -->
+
+                        </div>
+
+                    </nav> <!-- end #nav-wrap -->
+                </header> <!-- Header End -->
+            {%- endblock navbar %}
+
+            {% block content -%}
+                <!-- Content
+         ================================================== -->
+                <div id="content-wrap">
+                    {#    <div class="container">#}
+                    {% for message in get_flashed_messages() %}
+                        <div class="alert alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {% block page_content %}
+                        <div class="row">
+
+                            <div id="main" class="eight columns">
+                                {% block main %}{% endblock %}
+                            </div>
+                            <div id="sidebar" class="four columns">
+
+                                <div class="widget widget_search">
+                                    <h3>Search</h3>
+                                    <form action="{{ url_for('main.search') }}" method="get">
+
+                                        <input type="text" value="搜索..." name="keyword" id="keyword"
+                                               onblur="if(this.value == '') { this.value = '搜索...'; }"
+                                               onfocus="if (this.value == '搜索...') { this.value = ''; }"
+                                               class="text-search">
+                                        <input type="submit" value="" class="submit-search">
+
+                                    </form>
+                                </div>
+
+                                <div class="widget widget_categories group">
+                                    <h3>分类</h3>
+                                    <ul>
+
+                                        {% for cate in category_lists_count() %}
+
+                                            <li><a href="{{ cate["category"].link|e }}"
+                                                   title="">{{ cate["category"]|e }}</a>
+                                                ({{ cate["count"]|e }})
+                                            </li>
+
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+
+                                <div class="widget widget_popular">
+                                    <h3>最新文章</h3>
+                                    <ul class="link-list">
+                                        {% for article in get_latest_articles() %}
+                                            <li><a href="{{ article.link|e }}"
+                                                   title="{{ article.title }}">{{ article.title|e }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+
+                                <div class="widget widget_tags">
+                                    <h3>标签</h3>
+
+                                    <div class="tagcloud group">
+                                        {% for tag in tag_lists() %}
+                                            <a href="{{ tag.link|e }}" title="{{ tag.name }}">{{ tag.name|e }}</a>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                                <div class="widget widget_popular">
+                                    <h3>热门文章</h3>
+
+                                    <ul class="link-list">
+                                        {% for article in get_top_articles() %}
+                                            <li><a href="{{ article.link|e }}"
+                                                   title="{{ article.title }}">{{ article.title|e }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+
+                            </div> <!-- end sidebar -->
+                        </div><!-- end row -->
+
+                    {% endblock %}
+
+                </div><!-- end content-wrap -->
+                <!-- Footer
+            ================================================== -->
+                <footer>
+
+                    <div class="row">
+
+                        <div class="twelve columns">
+                            <ul class="social-links">
+                                <li><a href="https://www.facebook.com/100006076216729" target="_blank"><i
+                                        class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://twitter.com/adisonhyh" target="_blank"><i
+                                        class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://plus.google.com/u/0/112898125721355991987" target="_blank"><i
+                                        class="fa fa-google-plus"></i></a></li>
+                                <li><a href="https://github.com/adisonhyh" target="_blank"><i
+                                        class="fa fa-github-square"></i></a>
+                                </li>
+                                {#                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>#}
+                                {#                    <li><a href="#"><i class="fa fa-flickr"></i></a></li>#}
+                                {#                    <li><a href="#"><i class="fa fa-skype"></i></a></li>#}
+                            </ul>
+                        </div>
+
+                        <p class="copyright">&copy; Copyright 2017 Adison's Room</p>
+
+                    </div> <!-- End row -->
+
+                    <div id="go-top"><a class="smoothscroll" title="Back to Top" href="#top"><i
+                            class="fa fa-chevron-up"></i></a>
+                    </div>
+
+                </footer> <!-- End Footer-->
+            {%- endblock content %}
+
+            {% block scripts %}
+                {{ moment.include_jquery() }}
+                {{ moment.include_moment() }}
+
+                <!--使用中文,默认是英语的-->
+                {{ moment.lang("zh-CN") }}
+                <script src="{{ url_for('static', filename='js/modernizr.js', _external=True) }}"></script>
+                <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js', _external=True) }}"></script>
+                <script src="{{ url_for('static', filename='js/main.js', _external=True) }}"></script>
+                <script src="{{ url_for('static', filename='js/util.js', _external=True) }}"></script>
+                <script src="{{ url_for('static', filename='js/lightense.js', _external=True) }}"></script>
+
+                <script>
+                    var u = navigator.userAgent, app = navigator.appVersion;
+                    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+                    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                    if (!(isAndroid || isiOS)) {
+                        var forkStr = ' <a href="https://github.com/adisonhyh/flask-blog" target="_blank">\n' +
+                            '                <img style="z-index: 1000 ; position: absolute; top: 0; right: 0; border: 0;"\n' +
+                            '                     src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"\n' +
+                            '                     alt="Fork me on GitHub"\n' +
+                            '                     data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">\n' +
+                            '            </a>'
+                        $('body').append(forkStr)
+                    }
+                    window.addEventListener('load', function () {
+                        var el = document.querySelectorAll('img');
+                        Lightense(el);
+                    }, false);
+                </script>
+            {%- endblock scripts %}
+        {%- endblock body %}
+        </body>
+    {%- endblock html %}
+    </html>
+{% endblock doc -%}
