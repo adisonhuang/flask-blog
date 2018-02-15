@@ -9,6 +9,7 @@ from app.models import User, Article, Source, Category, Tag, Comment, Role, Perm
 
 from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
+
 # 默认环境
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
@@ -36,6 +37,15 @@ def test():
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
+
+@manager.command
+def deploy():
+    """Run deployment tasks."""
+    # 插入角色
+    Role.insert_roles()
+    # 插入管理员
+    User.insert_admin()
 
 
 if __name__ == '__main__':
